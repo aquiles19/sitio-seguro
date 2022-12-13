@@ -566,13 +566,7 @@ $ruta = RUTA;
                                                   <div class="form-group col-lg-6"> -->
 
                                 <div class="row">
-                                    <div class="col-lg-6">
-                                        <label class="col-lg-4 ">Usuario</label>
-                                        <div class="col-lg-12">
-                                            <input class="form-control" placeholder="Usuario" id="userNew" type="Text" required>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6 form-group">
+                                    <div class="col-lg-12 form-group">
                                         <label class="col-lg-4 ">Perfil</label>
                                         <div class="col-lg-12">
                                             <select class="form-control" id="perfilNuevo">
@@ -580,6 +574,18 @@ $ruta = RUTA;
                                             </select>
                                         </div>
                                     </div>
+                                </div>
+                                <div class="content">
+                                   
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h6 class="card-subtitle mb-2 text-muted">Extenciones del usuario</h6>
+                                            <div id="formExtensiones">
+                                               
+                                            </div>
+                                        </div>
+                                    </div>
+                                   
                                 </div>
                                 <div class="row">
                                     <div class="col-lg-5">
@@ -593,15 +599,15 @@ $ruta = RUTA;
                                     <div class="col-lg-6">
                                         <label class="col-lg-4 permisosBlock">Permisos</label>
                                         <div class="form-check form-check-inline">
-                                            <input class="permisosCarpetas form-check-input" type="checkbox" id="inlineCheckbox1" disabled value="1">
+                                            <input name="permisosCarpetas[]" class="permisosCarpetas form-check-input" type="checkbox" id="inlineCheckbox1" disabled value="1">
                                             <label class="permisosCarpetas form-check-label" for="inlineCheckbox1">Descarga</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="permisosCarpetas form-check-input" type="checkbox" id="inlineCheckbox2" disabled value="2">
+                                            <input name="permisosCarpetas[]" class="permisosCarpetas form-check-input" type="checkbox" id="inlineCheckbox2" disabled value="2">
                                             <label class="permisosCarpetas form-check-label" for="inlineCheckbox2">Carga</label>
                                         </div>
                                         <div class="form-check form-check-inline">
-                                            <input class="permisosCarpetas form-check-input" type="checkbox" id="inlineCheckbox3" disabled value="3">
+                                            <input name="permisosCarpetas[]" class="permisosCarpetas form-check-input" type="checkbox" id="inlineCheckbox3" disabled value="3">
                                             <label class="permisosCarpetas form-check-label" for="inlineCheckbox3">Borrar</label>
                                         </div>
                                     </div>
@@ -609,8 +615,22 @@ $ruta = RUTA;
                                     <label class="col-lg-4 permisosBlock">&nbsp;</label>
                                     <button type="button" class="btn btn-outline-success" id="addNewFiles" disabled>+</button>
                                     </div>
+                                    
 
                                 </div>
+                                <br>
+                                <div class="content contentFilesList" hidden>
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <h6 class="card-subtitle mb-2 text-muted">Listas de carpetas permitidas</h6>
+                                                <div id="formCarpetas">
+
+                                                    
+                                                
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
 
                             </div>
                         </div>
@@ -639,10 +659,12 @@ $ruta = RUTA;
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     -->
-    <script src="./assets/js/jquery-3.3.1.min.js"></script>
+    <!--<script src="./assets/js/jquery-3.3.1.min.js"></script>-->
+    <script src="./assets/js/jquery-3.5.1.js"></script>
     <!-- <script src="./assets/js/tether.min.js" integrity="sha384-DztdAPBWPRXSA/3eYEEUWrWCy7G5KFbe8fFjk5JAIxUYHKkDx6Qin1DkWx51bBrb" crossorigin="anonymous"></script>-->
     <script src="./assets/js/bootstrap.min.js"></script>
     <script src="./assets/js/jquery-3.5.1.js"></script>
+    <script src="./assets/js/md5.pack.js"></script>
     <script>
         localStorage.setItem("usuario",<?= $idUser ?>);
         const user = '<?= $idUser ?>';
@@ -665,15 +687,61 @@ $ruta = RUTA;
     $("#addNewFiles").click(function(e){
         e.preventDefault();
         console.log("Agregamos nueva carpeta")
+        var filesNuevo = $("#filesNuevo option:selected").html()
+        var filesNuevoId = $("#filesNuevo option:selected").val()
+   
+
+        var permisoID = [];
+        var etiquetas = [];
+            $.each($("input[name='permisosCarpetas[]']:checked"), function(){
+                if(parseInt($(this).val())==1){
+                    etiquetas.push('Descarga');
+                }else if(parseInt($(this).val())==2){
+                    etiquetas.push('Carga');
+                }else if(parseInt($(this).val())==3){
+                    etiquetas.push('Borrar');
+                }
+
+                permisoID.push($(this).val());
+            });
+        var permisosId=permisoID.join(",");
+        var permisosEtiquetas=etiquetas.join(", ");
+
+        var carpetaNueva= '<div class="col-12">\
+                <div class="form-check form-check-inline col-8">\
+                    <input class="form-control" type="text" name="carpetaName[]" value="'+filesNuevo+'" readonly>\
+                    <input class="form-control" type="hidden" name="carpetaNameId[]" value="'+filesNuevoId+'" readonly>\
+                </div>\
+                <div class="form-check form-check-inline">\
+                    <input name="permisosCarpetasActivas[]" class="permisosCarpetasActivas form-check-input" type="hidden" id="inlineCheckbox1" readonly value="'+permisosId+'">\
+                    <label class="permisosCarpetasActivas form-check-label" readonly for="inlineCheckbox1">'+permisosEtiquetas+'</label>\
+                </div>\
+            </div>';
+
+        $("#formCarpetas").after(carpetaNueva)
+        $(".contentFilesList").prop("hidden",false);
+        $("input[name='permisosCarpetas[]']:checked").prop("checked",false)
+        $("#filesNuevo option:selected").prop("disabled",true)
+        $("select#filesNuevo").prop('selectedIndex', 0);
+        $("#addNewFiles").prop("disabled",true)
+        $("#inlineCheckbox1").prop("disabled",true)
+        $("#inlineCheckbox2").prop("disabled",true)
+        $("#inlineCheckbox3").prop("disabled",true)
     })
     $(".permisosCarpetas").click(function(){
-        var numberChecked = $('input:checkbox:not(":checked")').length;
-        console.log(numberChecked,parseInt(numberChecked))
-        if( parseInt(numberChecked)==3){
-            $("#addNewFiles").prop("disabled",true)
-        }else  if(parseInt(numberChecked)<3){
-            $("#addNewFiles").prop("disabled",false)
-        }
+
+       // setTimeout(() =>{
+            var numberChecked = $("input[name='permisosCarpetas[]']:checked").length;
+
+            //$("input[name='permisosCarpetas[]']:checked").length;
+            console.log(numberChecked,$("input[name='permisosCarpetas[]']:checked").val())
+            if( parseInt(numberChecked)==0){
+                $("#addNewFiles").prop("disabled",true)
+            }else  if(parseInt(numberChecked)>0){
+                $("#addNewFiles").prop("disabled",false)
+            }
+       // },500)
+       
     })
 });
 
@@ -692,6 +760,20 @@ function _getusuarios(idUser) {
         });
         
         $("#filesNuevo").html(carpetas);
+
+
+        var extensiones = ''
+
+        $.each(data.response[0].CatUsuarios[0].Extensiones, function(indice, valor) {
+            extensiones += '<div class="form-check form-check-inline">\
+                            <input class="extensionesFormulario" form-check-input" type="checkbox" id="extension' + valor.idExtArc + '" value="' + valor.idExtArc + '">\
+                            <label class="extensionesFormulario" form-check-label" for="extension' + valor.idExtArc + '">' + valor.Nombre + '</label>\
+                        </div>';
+        });
+        
+        $("#formExtensiones").html(extensiones);
+
+        
 
         var CatStatus = '<option value="">Selecciona una opción</option>';
         $.each(data.response[0].CatUsuarios[0].StatusUsuario, function(indice, valor) {
@@ -742,11 +824,121 @@ function _getusuarios(idUser) {
         $("#tabla_usuarios_content").html(table);
         $('#Subtabla').DataTable({
             "language": {
-                "url": "js/Spanish.json"
+                "url": "assets/js/Spanish.json"
             }
         });
     }, 'json');
 }
+
+// NUEVOUSUARIO 
+//NUEVO USUARIO
+
+$("#FormNuevo").submit(function(event) {
+        event.preventDefault();
+        var Nombre = $("#nombreNuevo").val();
+        var Paterno = $("#paternoNuevo").val();
+        var Materno = $("#maternoNuevo").val();
+        var Email = $("#emailNuevo").val();
+        var Password = $("#Password").val();
+       // Password = md5(Password);
+        var Usuario = $("#usuarioNuevo").val();
+        var idPerfil = $("#perfilNuevo").val();
+
+
+        var etiquetas = [];
+            $.each($("input[name='carpetaNameId\[\]']"), function(){
+                etiquetas.push($(this).val());
+                console.log($(this).val())
+            });
+        var listFilesName=etiquetas.join(", ");
+        console.log(etiquetas)
+
+        var permisos = [];
+            $.each($("input[name='permisosCarpetasActivas\[\]']"), function(){
+                permisos.push($(this).val());
+                console.log($(this).val())
+            });
+        var listIds=permisos.join(", ");
+        console.log(permisos)
+
+        $.post('core/API/newuser.php', {
+            permisos,
+            etiquetas,
+            Nombre: Nombre,
+            Paterno: Paterno,
+            Materno: Materno,
+            Email: Email,
+            Password: Password,
+            Usuario: Usuario,
+            idPerfil: idPerfil
+        },function(data){
+           console.log(data)
+        }, 'json') 
+
+/*
+        $.post('core/newusr.php', {
+          Nombre: Nombre,
+          Paterno: Paterno,
+          Materno: Materno,
+          Email: Email,
+          Password: Password,
+          Usuario: Usuario,
+          idPerfil: idPerfil
+        }, function(data) {
+          console.log(data);
+          if (data.response[0].Code == 1) {
+            toastr.success('Usuarios', data.response[0].Msj);
+            $(".Cerrar").click();
+            $("#nombreNuevo").val("");
+            $("#paternoNuevo").val("");
+            $("#maternoNuevo").val("");
+            $("#emailNuevo").val("");
+            $("#Password").val("");
+            $("#usuarioNuevo").val("");
+            $("#perfilNuevo").val("1");
+            $("#organizacionNuevo").val("1");
+            $("#TipoUsuarioNuevo").val("1");
+          } else {
+            toastr.warning('Usuarios', data.response[0].Msj);
+          }
+          _getusuarios();
+        }, 'json');
+        */
+      });
+
+$("#FormEdit").submit(function(event) {
+        event.preventDefault();
+        console.log("Se envia");
+        var idUsuario = $("#idUsuarioS").val();
+        var Nombre = $("#userEdit").val();
+        var Paterno = $("#paternoEdit").val();
+        var Materno = $("#maternoEdit").val();
+        var Email = $("#emailEdit").val();
+        var Usuario = $("#usuario").val();
+        var idPerfil = $("#perfilEdit").val();
+        var Accion = $("#AccionesEdit").val();
+        $.post('core/editusr.php', {
+          idUsuario: idUsuario,
+          Nombre: Nombre,
+          Paterno: Paterno,
+          Materno: Materno,
+          Email: Email,
+          Usuario: Usuario,
+          idPerfil: idPerfil,
+          Accion: Accion
+        }, function(data) {
+          console.log(data);
+          if (data.response[0].Code == 1) {
+            toastr.success('Usuarios', data.response[0].Msj);
+            $(".Cerrar").click();
+          } else {
+            toastr.warning('Usuarios', data.response[0].Msj);
+          }
+          _getusuarios();
+        }, 'json');
+      });
+
+      
    </script>
 
 
