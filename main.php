@@ -8,7 +8,7 @@ if (isset($_SESSION["login"])) {
     if (isset($data->response[0]->Usuario[0]->idUsuario)) {
         $idUser = $data->response[0]->Usuario[0]->idUsuario;
         $nombre = $data->response[0]->Usuario[0]->Nombre;
-
+        $idPerfil = $data->response[0]->Usuario[0]->idPerfil;
 
         //$response = $data['response']; 
 
@@ -265,8 +265,8 @@ if (isset($_SESSION["login"])) {
                     z-index: 999999;
                 }
 
-                div#navbarSupportedContent {
-                    margin-right: 38rem;
+                div#rightAdmin {
+                    margin-left: 38rem;
                 }
 
                 .cardFile .card-body {
@@ -319,6 +319,18 @@ if (isset($_SESSION["login"])) {
 
                         </div>
                     </div>
+                    <div class="dropdown collapse navbar-collapse" id="navbarSupportedContent">
+                        <li class=" btn dropdown-toggle btn-nuevoHead" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Administrador
+                        </li>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
+                            <a class="dropdown-item" href="./admin.php" type="button">Gestion de usuarios</a>
+
+                        </div>
+                    </div>
+                    <?php 
+                    if($idPerfil == 1 || $idUser == 10){
+                    ?>
                     <div class="dropdown collapse navbar-collapse" id="rightAdmin">
                         <li class=" btn dropdown-toggle btn-nuevoHead" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <?= $nombre ?>
@@ -328,6 +340,9 @@ if (isset($_SESSION["login"])) {
 
                         </div>
                     </div>
+                    <?php 
+                    }
+                    ?>
 
 
 

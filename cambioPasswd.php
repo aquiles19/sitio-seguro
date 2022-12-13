@@ -288,7 +288,7 @@ if (isset($_SESSION["login"])) {
                             console.log(RESP);
 
                             if (parseInt(RESP.response[0].Code) == 1) {
-                                $(location).attr('href', './index.html');
+                                $(location).attr('href', './index.php');
                             } else {
                                 setTimeout(function() {
                                     $(".msgPass").css("display", "none");

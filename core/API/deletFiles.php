@@ -3,12 +3,7 @@ include_once '../Consumos.php';
 session_start();
 
 $carpeta = strval($_POST['carpeta']);
-$filename =  RUTA .$carpeta ."/". $_POST['archivo'];
-
-
-
-
-
+$filename =  RUTA . $carpeta ."/". $_POST['archivo'];
 
 if (file_exists($filename)) {
     if (unlink($filename)) {

@@ -1,0 +1,7 @@
+RewriteEngine On
+DirectoryIndex index.php
+SetOutputFilter DEFLATE
+SetEnvIfNoCase Request_URI "\.(?:gif|jpe?g|png)$" no-gzip
+
+RewriteRule  ^Main.jsp?(.*)$  						/main.php?$1  [NC,L,QSA]
+RewriteRule  ^index.jsp?(.*)$  						/index.php?$1  [NC,L,QSA]

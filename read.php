@@ -25,6 +25,15 @@ echo "<br>";
 /*
 echo json_encode($array);
 print_r($array);
+
+/var/www/html/core/API
+/media/nmedia/files
+
+
+
 */
+
+
+
 
 ?>
