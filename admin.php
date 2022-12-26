@@ -6,7 +6,7 @@ session_start();
 if (isset($_SESSION["login"])) {
 
     $data = json_decode($_SESSION["login"]);
-    if (isset($data->response[0]->Usuario[0]->idUsuario) && ($data->response[0]->Usuario[0]->idPerfil == 1 || $data->response[0]->Usuario[0]->idUsuario == 10)) {
+    if (isset($data->response[0]->Usuario[0]->idUsuario) && ($data->response[0]->Usuario[0]->idPerfil == 1 || $data->response[0]->Usuario[0]->idUsuario == 10 || $data->response[0]->Usuario[0]->idUsuario == 13)) {
         $idUser = $data->response[0]->Usuario[0]->idUsuario;
         $nombre = $data->response[0]->Usuario[0]->Nombre;
         $idPerfil = $data->response[0]->Usuario[0]->idPerfil;
@@ -275,6 +275,12 @@ if (isset($_SESSION["login"])) {
                 .permisosBlock{
                     display: block;
                 }
+                .modal-dialog.modal-dialog-centered.modal-lg {
+    max-width: 1100px;
+}
+table.table.table-striped {
+    width: 100%;
+}
             </style>
 
         </head>
@@ -634,7 +640,7 @@ if (isset($_SESSION["login"])) {
                                         
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <h6 class="card-subtitle mb-2 text-muted">Extenciones del usuario</h6>
+                                                    <h6 class="card-subtitle mb-2 text-muted">Extenciones permitidas por usuario</h6>
                                                     <div id="formExtensiones">
                                                     
                                                     </div>
@@ -642,7 +648,7 @@ if (isset($_SESSION["login"])) {
                                             </div>
                                         
                                         </div>
-                                        <div class="row">
+                                        <!-- <div class="row">
                                             <div class="col-lg-5">
                                                 <label class="col-lg-4 ">Carpetas</label>
                                                 <div class="col-lg-12">
@@ -667,25 +673,35 @@ if (isset($_SESSION["login"])) {
                                                 </div>
                                             </div>
                                             <div class="col-lg-1">
-                                            <label class="col-lg-4 permisosBlock">&nbsp;</label>
-                                            <button type="button" class="btn btn-outline-success" id="addNewFiles" disabled>+</button>
+                                                <label class="col-lg-4 permisosBlock">&nbsp;</label>
+                                                <button type="button" class="btn btn-outline-success" id="addNewFiles" disabled>+</button>
                                             </div>
                                             
 
-                                        </div>
+                                        </div> -->
                                         <br>
-                                        <div class="content contentFilesList" hidden>
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        <h6 class="card-subtitle mb-2 text-muted">Listas de carpetas permitidas</h6>
-                                                        <div id="formCarpetas">
+                                        <div class="content contentFilesList" >
+                                            <!-- <div class="card">
+                                                <div class="card-body">
+                                                    <h6 class="card-subtitle mb-2 text-muted">Listas de carpetas permitidas</h6>
+                                                    <div id="formCarpetas">
 
-                                                            
                                                         
-                                                        </div>
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h5 class="card-subtitle mb-2 text-muted">Permisos en Carpetas    <span class="badge badge-pill badge-primary btn float-right" id="checkAll">Activar todo</span> </h5>
+                                                    <div id="filesList">
+
+                                                        
+                                                    
                                                     </div>
                                                 </div>
                                             </div>
+                                        </div>
 
                                     </div>
                                 </div>
@@ -867,9 +883,28 @@ if (isset($_SESSION["login"])) {
             })
         });
 
+        $("#checkAll").click(function(){
+            
+            if($(".checkAllPermission").prop("checked")){
+                $(".checkAllPermission").prop("checked",false)
+                $("#checkAll").html("Activar todo")
+            }else{
+                $("#checkAll").html("Desactivar todo")
+                $(".checkAllPermission").prop("checked",true)
+            }
+            
+        })
+        $(".checkAllPermission")
+        $("#filesList").delegate(".checkAllPermission","click",function(){
+            var id = $(this).attr("data-id");
+            var tipo = $(this).attr("data-type");
+            console.log(id,tipo);
+        })
+
         function _getusuarios(idUser,perfilValue) {
             console.log(perfil,"<- Perfil")
             $.post('core/API/getUser.php', { idUser }, function(data) {
+
                 var perfil = '<option value="">Selecciona un perfil</option>';
                 $.each(data.response[0].CatUsuarios[0].Perfiles, function(indice, valor) {
                     perfil += '<option value=' + valor.idPerfil + '>' + valor.Nombre + '</option>';
@@ -883,6 +918,27 @@ if (isset($_SESSION["login"])) {
                 });
                 
                 $("#filesNuevo").html(carpetas);
+
+                var filesList='<table class="table table-striped">\
+                                <thead>\
+                                    <tr>\
+                                    <th scope="col">Carpeta</th>\
+                                    <th scope="col">Cargar</th>\
+                                    <th scope="col">Descarga</th>\
+                                    <th scope="col">Borrar</th>\
+                                    </tr>\
+                                </thead>\
+                            <tbody>';
+                $.each(data.response[0].CatUsuarios[0].Carpetas, function(indice, valor) {
+                    filesList += '<tr>';
+                    filesList += '<td><span class="File'+valor.idCarpeta+'" data-active="0" data-idFiles="'+valor.idCarpeta+'">' + valor.Nombre + '</span></td>';
+                    filesList += '<td><div class="form-check"><input class="checkAllPermission form-check-input" type="checkbox" value="" data-type="c" data-id="'+valor.idCarpeta+'" id="c'+valor.idCarpeta+'"><label class="form-check-label" for="c'+valor.idCarpeta+'">Carga</label></div></td>';
+                    filesList += '<td><div class="form-check"><input class="checkAllPermission form-check-input" type="checkbox" value="" data-type="d" data-id="'+valor.idCarpeta+'" id="d'+valor.idCarpeta+'"><label class="form-check-label" for="d'+valor.idCarpeta+'">Descarga</label></div></td>';
+                    filesList += '<td><div class="form-check"><input class="checkAllPermission form-check-input" type="checkbox" value="" data-type="b" data-id="'+valor.idCarpeta+'" id="b'+valor.idCarpeta+'"><label class="form-check-label" for="b'+valor.idCarpeta+'">Borrar</label></div></td>';
+                    filesList += '</tr>';
+                });
+                filesList += '</tbody></table>';
+                $("#filesList").html(filesList)
 
 
                 var extensiones = ''
@@ -915,49 +971,52 @@ if (isset($_SESSION["login"])) {
                 var table = '<table id="Subtabla" class="table table-hover"><thead><tr><th>Nombre</th><th>Paterno</th><th>Materno</th><th>Email</th><th>Usuario</th><th>Estatus</th><th>Perfil</th><th>Editar</th><th>Accion</th></tr></thead><tbody>';
 
                 $.each(data.response[0].CatUsuarios[0].Usuarios, function(indice, valor) {
-                    table += '<tr>';
-                    table += '<td>' + valor.Nombre + '</td>';
-                    table += '<td>' + valor.Paterno + '</td>';
-                    table += '<td>' + valor.Materno + '</td>';
-                    table += '<td>' + valor.Email + '</td>';
-                    table += '<td>' + valor.Usuario + '</td>';
-                    
+                    if(valor.Nombre != undefined){
+                        table += '<tr>';
+                        table += '<td>' + valor.Nombre + '</td>';
+                        table += '<td>' + valor.Paterno + '</td>';
+                        table += '<td>' + valor.Materno + '</td>';
+                        table += '<td>' + valor.Email + '</td>';
+                        table += '<td>' + valor.Usuario + '</td>';
+                        
 
-                    var UsersStatus = valor.Status;
-                    if (UsersStatus != 0) {
-                        $.each(data.response[0].CatUsuarios[0].StatusUsuario, function(index, valor) {
-                            if (valor.idStatus == UsersStatus) {
+                        var UsersStatus = valor.Status;
+                        if (UsersStatus != 0) {
+                            $.each(data.response[0].CatUsuarios[0].StatusUsuario, function(index, valor) {
+                                if (valor.idStatus == UsersStatus) {
+                                    table += '<td>' + valor.Nombre + '</td>';
+                                }
+                            });
+                        } else {
+                            table += '<td>Disponible</td>';
+                        }
+
+                        var dPerfil = valor.idPerfil;
+                        $.each(data.response[0].CatUsuarios[0].Perfiles, function(index, valor) {
+                            if (valor.idPerfil == dPerfil) {
                                 table += '<td>' + valor.Nombre + '</td>';
                             }
                         });
-                    } else {
-                        table += '<td>Disponible</td>';
+                        console.error(perfilValue)
+                        if(perfilValue == '1'){
+                            table += '<td><button data-user="' + valor.Usuario + '" data-Nombre="' + valor.Nombre + '" data-Paterno="' + valor.Paterno + '" data-Materno="' + valor.Materno + '" data-Email="' + valor.Email + '" data-idUser="' + valor.idUsuario + '" data-idPerfil="' + valor.idPerfil + '" data-idOrganizacion="' + valor.idOrganizacion + '" data-idTipoUsuario="' + valor.idTipoUsuario + '" data-Status="' + valor.Status + '" class="btn btn-warning btnEditar" data-toggle="modal" data-target="#modal-editar">Editar</button></td>';
+                        }else{
+                            table += '<td> </td>';
+                        }
+                        
+                        table += '<td><ul class="nav nav-pills">\
+                                    <li class="nav-item dropdown">\
+                                        <a class="nav-link active dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Acciones</a>\
+                                        <div class="dropdown-menu">\
+                                        <a class="dropdown-item acionesCambio" data-id="1" data-usuario="'+valor.idUsuario+'" href="#">Baja</a>\
+                                        <a class="dropdown-item acionesCambio" data-id="2" data-usuario="'+valor.idUsuario+'" href="#">Activacion</a>\
+                                        <a class="dropdown-item acionesCambio" data-id="3" data-usuario="'+valor.idUsuario+'" href="#">Bloqueo</a>\
+                                        <a class="dropdown-item acionesCambio" data-id="4" data-usuario="'+valor.idUsuario+'" href="#">Reset</a>\
+                                    </li>\
+                                </ul></td>';
+                        table += '</tr>';
                     }
 
-                    var dPerfil = valor.idPerfil;
-                    $.each(data.response[0].CatUsuarios[0].Perfiles, function(index, valor) {
-                        if (valor.idPerfil == dPerfil) {
-                            table += '<td>' + valor.Nombre + '</td>';
-                        }
-                    });
-                    console.error(perfilValue)
-                    if(perfilValue == '1'){
-                        table += '<td><button data-user="' + valor.Usuario + '" data-Nombre="' + valor.Nombre + '" data-Paterno="' + valor.Paterno + '" data-Materno="' + valor.Materno + '" data-Email="' + valor.Email + '" data-idUser="' + valor.idUsuario + '" data-idPerfil="' + valor.idPerfil + '" data-idOrganizacion="' + valor.idOrganizacion + '" data-idTipoUsuario="' + valor.idTipoUsuario + '" data-Status="' + valor.Status + '" class="btn btn-warning btnEditar" data-toggle="modal" data-target="#modal-editar">Editar</button></td>';
-                    }else{
-                        table += '<td> </td>';
-                    }
-                    
-                    table += '<td><ul class="nav nav-pills">\
-                                <li class="nav-item dropdown">\
-                                    <a class="nav-link active dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Acciones</a>\
-                                    <div class="dropdown-menu">\
-                                    <a class="dropdown-item acionesCambio" data-id="1" data-usuario="'+valor.idUsuario+'" href="#">Baja</a>\
-                                    <a class="dropdown-item acionesCambio" data-id="2" data-usuario="'+valor.idUsuario+'" href="#">Activacion</a>\
-                                    <a class="dropdown-item acionesCambio" data-id="3" data-usuario="'+valor.idUsuario+'" href="#">Bloqueo</a>\
-                                    <a class="dropdown-item acionesCambio" data-id="4" data-usuario="'+valor.idUsuario+'" href="#">Reset</a>\
-                                </li>\
-                            </ul></td>';
-                    table += '</tr>';
                 });
                 table += '</tbody></table>';
                 $("#tabla_usuarios_content").html(table);

@@ -319,6 +319,9 @@ if (isset($_SESSION["login"])) {
 
                         </div>
                     </div>
+                    <?php 
+                    if($idPerfil == 1 || $idUser == 10 || $idUser == 13){
+                    ?>
                     <div class="dropdown collapse navbar-collapse" id="navbarSupportedContent">
                         <li class=" btn dropdown-toggle btn-nuevoHead" type="button" id="dropdownMenu3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             Administrador
@@ -329,7 +332,7 @@ if (isset($_SESSION["login"])) {
                         </div>
                     </div>
                     <?php 
-                    if($idPerfil == 1 || $idUser == 10){
+                    }
                     ?>
                     <div class="dropdown collapse navbar-collapse" id="rightAdmin">
                         <li class=" btn dropdown-toggle btn-nuevoHead" type="button" id="dropdownMenu2" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -340,9 +343,7 @@ if (isset($_SESSION["login"])) {
 
                         </div>
                     </div>
-                    <?php 
-                    }
-                    ?>
+                   
 
 
 

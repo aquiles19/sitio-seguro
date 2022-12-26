@@ -15,8 +15,8 @@ SSI/GestUsuario
     }
 }
 */
-$idUsuario=$_POST["idUsuario"];
-$Accion=$_POST["Accion"];
+$idUsuario=$_POST["idUsuario"] ?? 1;
+$Accion=$_POST["Accion"] ?? 4;
 
 $data["PARAMETERS"] = [
     "idUsuario"=>$idUsuario,
