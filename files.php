@@ -569,7 +569,7 @@ table.table.table-striped {
                     <div class="modal-content">
                         <div class="modal-header">
 
-                            <h5 class="modal-title">Nuevo Usuario</h5>
+                            <h5 class="modal-title">Nueva Carpeta</h5>
                             <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
                             <!-- <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small> -->
                         </div>
@@ -584,128 +584,9 @@ table.table.table-striped {
                                                     <input class="form-control" maxlength="16" required id="nombreNuevo" type="text" value="" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]{3,16}" title="Sólo letras Mayúsculas y minúsculas. Ej. María" / placeholder="Nombre">
                                                 </div>
                                             </div>
-                                            <div class="col-lg-6">
-                                                <label class="col-sm-4 col-md-4 col-lg-4 col-xs-4 ">Paterno:</label>
-                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
-                                                    <input class="form-control" minlength="4" maxlength="16" required name="paternoNuevo" id="paternoNuevo" type="text" value="" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]{4,16}" title="Sólo letras Mayúsculas y minúsculas. Ej. Hernandez" / placeholder="Paterno" required>
-                                                </div>
-                                            </div>
                                         </div>
-                                        <div class="row">
-                                            <div class="col-lg-6">
-                                                <label class="col-sm-4 col-md-4 col-lg-4 col-xs-4 ">Materno:</label>
-                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
-                                                    <input class="form-control" minlength="4" maxlength="16" required name="maternoNuevo" id="maternoNuevo" type="text" value="" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]{4,16}" title="Sólo letras Mayúsculas y minúsculas. Ej. García" / placeholder="Materno" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <label class="col-sm-4 col-md-4 col-lg-4 col-xs-4 ">Usuario:</label>
-                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
-                                                    <input class="form-control" maxlength="16" required id="usuarioNuevo" type="text" value="" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ0-9 .]{3,16}" title="Sólo letras Mayúsculas y minúsculas. Ej. usuario1" / placeholder="Usuario" required>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <!-- <div class="col-lg-6">
-                                                <label class="col-sm-4 col-md-4 col-lg-4 col-xs-4 ">Password:</label>
-                                                <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
-                                                    <input class="form-control" required id="Password" type="password" value="" minlength="5" maxlength="12" placeholder="Password" required>
-                                                </div>
-                                            </div> -->
-                                            <div class="col-lg-6">
-                                                <label class="col-lg-4 ">Email</label>
-                                                <div class="col-lg-12">
-                                                    <input class="form-control" placeholder="Email" id="emailNuevo" type="email" required>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6 form-group">
-                                                <label class="col-lg-4 ">Perfil</label>
-                                                <div class="col-lg-12">
-                                                    <select class="form-control" id="perfilNuevo">
-                                                        <option value="">Selecciona una opción</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- </div>
-                                                        <div class="form-group col-lg-6"> -->
-
-                                        <!-- <div class="row">
-                                            <div class="col-lg-12 form-group">
-                                                <label class="col-lg-4 ">Perfil</label>
-                                                <div class="col-lg-12">
-                                                    <select class="form-control" id="perfilNuevo">
-                                                        <option value="">Selecciona una opción</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                        </div> -->
-                                        <div class="content">
                                         
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h6 class="card-subtitle mb-2 text-muted">Extensiones permitidas por usuario</h6>
-                                                    <div id="formExtensiones">
-                                                    
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        
-                                        </div>
-                                        <!-- <div class="row">
-                                            <div class="col-lg-5">
-                                                <label class="col-lg-4 ">Carpetas</label>
-                                                <div class="col-lg-12">
-                                                    <select class="form-control" id="filesNuevo">
-                                                        <option value="">Selecciona una opción</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <label class="col-lg-4 permisosBlock">Permisos</label>
-                                                <div class="form-check form-check-inline">
-                                                    <input name="permisosCarpetas[]" class="permisosCarpetas form-check-input" type="checkbox" id="inlineCheckbox1" disabled value="1">
-                                                    <label class="permisosCarpetas form-check-label" for="inlineCheckbox1">Descarga</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input name="permisosCarpetas[]" class="permisosCarpetas form-check-input" type="checkbox" id="inlineCheckbox2" disabled value="2">
-                                                    <label class="permisosCarpetas form-check-label" for="inlineCheckbox2">Carga</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input name="permisosCarpetas[]" class="permisosCarpetas form-check-input" type="checkbox" id="inlineCheckbox3" disabled value="3">
-                                                    <label class="permisosCarpetas form-check-label" for="inlineCheckbox3">Borrar</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-1">
-                                                <label class="col-lg-4 permisosBlock">&nbsp;</label>
-                                                <button type="button" class="btn btn-outline-success" id="addNewFiles" disabled>+</button>
-                                            </div>
-                                            
-
-                                        </div> -->
-                                        <br>
-                                        <div class="content contentFilesList" >
-                                            <!-- <div class="card">
-                                                <div class="card-body">
-                                                    <h6 class="card-subtitle mb-2 text-muted">Listas de carpetas permitidas</h6>
-                                                    <div id="formCarpetas">
-
-                                                        
-                                                    
-                                                    </div>
-                                                </div>
-                                            </div> -->
-                                            <div class="card">
-                                                <div class="card-body">
-                                                    <h5 class="card-subtitle mb-2 text-muted">Permisos en Carpetas    <span class="badge badge-pill badge-primary btn float-right" id="checkAll">Activar todo</span> </h5>
-                                                    <div id="filesList">
-
-                                                        
-                                                    
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
+                                       
 
                                     </div>
                                 </div>
@@ -755,7 +636,7 @@ table.table.table-striped {
             $(document).ready(function() {
             let user = localStorage.getItem("usuario")
             let perfil = localStorage.getItem("perfil")
-            _getusuarios(user,perfil);
+            _getFiles(user,perfil);
             console.log("Inicio")
             $("#filesNuevo").change(function(){
                 if($("#filesNuevo option:selected").val()!=''){
@@ -859,7 +740,7 @@ table.table.table-striped {
                                                 if (parseInt(RESP.response[0].Code) == 1) {
                                                     let user = localStorage.getItem("usuario")
                                                     let perfil = localStorage.getItem("perfil")
-                                                    _getusuarios(user,perfil);
+                                                    _getFiles(user,perfil);
 
                                                     // var table = $('#tableFileslist').DataTable();
                                                     // table.destroy();
@@ -891,104 +772,17 @@ table.table.table-striped {
             })
         });
 
-        $("#checkAll").click(function(){
-            
-            if($(".checkAllPermission").prop("checked")){
-                $(".checkAllPermission").prop("checked",false)
-                $("#checkAll").html("Activar todo")
-            }else{
-                $("#checkAll").html("Desactivar todo")
-                $(".checkAllPermission").prop("checked",true)
-            }
-            
-        })
-        $(".checkAllPermission")
-        $("#filesList").delegate(".checkAllPermission","click",function(){
-            var id = $(this).attr("data-id");
-            var tipo = $(this).attr("data-type");
-           var cantidad = 0;
-           if($("#d"+id).prop("checked")){
-            cantidad++;
-           }
-           if($("#c"+id).prop("checked")){
-            cantidad++;
-           }
-           if($("#b"+id).prop("checked")){
-            cantidad++;
-           }
+        
+      
 
-           if(cantidad == 0){
-            
-           }
-        })
-
-        function _getusuarios(idUser,perfilValue) {
+        function _getFiles(idUser,perfilValue) {
             console.log(perfil,"<- Perfil")
-            $.post('core/API/getUser.php', { idUser }, function(data) {
+            $.post('core/API/getCarpetas.php', { idPerfil:perfilValue }, function(data) {
 
-                var perfil = '<option value="">Selecciona un perfil</option>';
-                $.each(data.response[0].CatUsuarios[0].Perfiles, function(indice, valor) {
-                    perfil += '<option value=' + valor.idPerfil + '>' + valor.Nombre + '</option>';
-                });
-                $("#perfilEdit").html(perfil);
-                $("#perfilNuevo").html(perfil);
-                
-                var carpetas = '<option value="">Selecciona una carpeta</option>';
-                $.each(data.response[0].CatUsuarios[0].Carpetas, function(indice, valor) {
-                    carpetas += '<option value=' + valor.idCarpeta + '>' + valor.Nombre + '</option>';
-                });
-                
-                $("#filesNuevo").html(carpetas);
+                console.log(data);
+             
 
-                var filesList='<table class="table table-striped">\
-                                <thead>\
-                                    <tr>\
-                                    <th scope="col">Carpeta</th>\
-                                    <th scope="col">Cargar</th>\
-                                    <th scope="col">Descarga</th>\
-                                    <th scope="col">Borrar</th>\
-                                    </tr>\
-                                </thead>\
-                            <tbody>';
-                $.each(data.response[0].CatUsuarios[0].Carpetas, function(indice, valor) {
-                    filesList += '<tr>';
-                    filesList += '<td><span class="File'+valor.idCarpeta+'" data-active="0" data-idFiles="'+valor.idCarpeta+'">' + valor.Nombre + '</span></td>';
-                    filesList += '<td><div class="form-check"><input class="checkAllPermission form-check-input" type="checkbox" value="" data-type="c" data-id="'+valor.idCarpeta+'" id="c'+valor.idCarpeta+'"><label class="form-check-label" for="c'+valor.idCarpeta+'">Carga</label></div></td>';
-                    filesList += '<td><div class="form-check"><input class="checkAllPermission form-check-input" type="checkbox" value="" data-type="d" data-id="'+valor.idCarpeta+'" id="d'+valor.idCarpeta+'"><label class="form-check-label" for="d'+valor.idCarpeta+'">Descarga</label></div></td>';
-                    filesList += '<td><div class="form-check"><input class="checkAllPermission form-check-input" type="checkbox" value="" data-type="b" data-id="'+valor.idCarpeta+'" id="b'+valor.idCarpeta+'"><label class="form-check-label" for="b'+valor.idCarpeta+'">Borrar</label></div></td>';
-                    filesList += '</tr>';
-                });
-                filesList += '</tbody></table>';
-                $("#filesList").html(filesList)
-
-
-                var extensiones = ''
-
-                $.each(data.response[0].CatUsuarios[0].Extensiones, function(indice, valor) {
-                    extensiones += '<div class="form-check form-check-inline">\
-                                    <input class="extensionesFormulario" form-check-input" type="checkbox" id="extension' + valor.idExtArc + '" value="' + valor.idExtArc + '">\
-                                    <label class="extensionesFormulario" form-check-label" for="extension' + valor.idExtArc + '">' + valor.Nombre + '</label>\
-                                </div>';
-                });
-                
-                $("#formExtensiones").html(extensiones);
-
-                
-
-                var CatStatus = '<option value="">Selecciona una opción</option>';
-                $.each(data.response[0].CatUsuarios[0].StatusUsuario, function(indice, valor) {
-                    CatStatus += '<option value=' + valor.idStatus + ' >' + valor.Nombre + '</option>';
-                });
-                $("#CatStatusEdit").html(CatStatus);
-                $("#CatStatusNuevo").html(CatStatus);
-
-                // var Acciones = '<option value="0">Selecciona una opción</option>';
-                // $.each(data.response[0].CatUsuarios[0].Acciones, function(indice, valor) {
-                //     Acciones += '<option value=' + valor.id + ' >' + valor.Nombre + '</option>';
-                // });
-                // $("#AccionesEdit").html(Acciones);
-
-                // console.log(data);
+               /*
                 var table = '<table id="Subtabla" class="table table-hover"><thead><tr><th>Nombre</th><th>Paterno</th><th>Materno</th><th>Email</th><th>Usuario</th><th>Estatus</th><th>Perfil</th><th>Editar</th><th>Accion</th></tr></thead><tbody>';
 
                 $.each(data.response[0].CatUsuarios[0].Usuarios, function(indice, valor) {
@@ -1056,6 +850,9 @@ table.table.table-striped {
                             }
                         ]
                 });
+
+
+                */
             }, 'json');
         }
 
@@ -1104,35 +901,7 @@ table.table.table-striped {
                 console.log(data)
                 }, 'json') 
 
-        /*
-                $.post('core/newusr.php', {
-                Nombre: Nombre,
-                Paterno: Paterno,
-                Materno: Materno,
-                Email: Email,
-                Password: Password,
-                Usuario: Usuario,
-                idPerfil: idPerfil
-                }, function(data) {
-                console.log(data);
-                if (data.response[0].Code == 1) {
-                    toastr.success('Usuarios', data.response[0].Msj);
-                    $(".Cerrar").click();
-                    $("#nombreNuevo").val("");
-                    $("#paternoNuevo").val("");
-                    $("#maternoNuevo").val("");
-                    $("#emailNuevo").val("");
-                    $("#Password").val("");
-                    $("#usuarioNuevo").val("");
-                    $("#perfilNuevo").val("1");
-                    $("#organizacionNuevo").val("1");
-                    $("#TipoUsuarioNuevo").val("1");
-                } else {
-                    toastr.warning('Usuarios', data.response[0].Msj);
-                }
-                _getusuarios();
-                }, 'json');
-                */
+        
             });
 
         $("#FormEdit").submit(function(event) {
@@ -1165,8 +934,8 @@ table.table.table-striped {
                 }
                 let user = localStorage.getItem("usuario")
                 let perfil = localStorage.getItem("perfil")
-                _getusuarios(user,perfil);
-                // _getusuarios();
+                _getFiles(user,perfil);
+                // _getFiles();
                 }, 'json');
             });
             $(document).on('click', '.btnEditar', function() {
