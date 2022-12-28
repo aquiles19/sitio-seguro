@@ -358,7 +358,7 @@ if (isset($_SESSION["login"])) {
 
 
                     <div id="secctionBienvenida">
-                        <div id="divBienvenido" style="color:#000066;size:3px;font-famyli:Verdana, Arial, Helvetica, sans-serif"><strong>
+                        <div id="divBienvenido" ><strong>
                                 <font color="#000066" size="3" face="Verdana, Arial, Helvetica, sans-serif">
 
                                     <div align="center" id="divBienvenidoTexto">
