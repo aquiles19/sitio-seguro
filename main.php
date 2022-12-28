@@ -328,6 +328,9 @@ if (isset($_SESSION["login"])) {
                         </li>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
                             <a class="dropdown-item" href="./admin.php" type="button">Gestion de usuarios</a>
+                            <?php if($idPerfil==1){ ?>
+                            <a class="dropdown-item" href="./files.php" type="button">Gestion de carpetas</a>
+                            <?php } ?>
 
                         </div>
                     </div>

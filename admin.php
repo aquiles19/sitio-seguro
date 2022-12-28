@@ -345,7 +345,9 @@ table.table.table-striped {
                         </li>
                         <div class="dropdown-menu" aria-labelledby="dropdownMenu3">
                             <a class="dropdown-item" href="./admin.php" type="button">Gestion de usuarios</a>
+                            <?php if($idPerfil==1){ ?>
                             <a class="dropdown-item" href="./files.php" type="button">Gestion de carpetas</a>
+                            <?php } ?>
                         </div>
                         
                     </div>
@@ -506,9 +508,10 @@ table.table.table-striped {
                             <!-- <small class="font-bold">Lorem Ipsum is simply dummy text of the printing and typesetting industry.</small> -->
                         </div>
                         <div class="modal-body ">
-                            <form class="row" id="FormEdit">
+                            <form  id="FormEdit">
                                 <input type="hidden" id="usuario" name="usuario" value="">
                                 <input type="hidden" id="idUsuarioS" name="idUsuarioS" value="">
+                                <div class="row">
                                 <div class="form-group col-lg-6">
                                     <div class="form-group">
                                         <label class="col-sm-4 col-md-4 col-lg-4 col-xs-4 ">Nombre:</label>
@@ -553,6 +556,43 @@ table.table.table-striped {
                                         </div>
                                     </div> -->
                                 </div>
+                                        </div>
+                                <div class="content">
+                                        
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h6 class="card-subtitle mb-2 text-muted">Extensiones permitidas por usuario</h6>
+                                                    <div id="formExtensionesEdit">
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        
+                                        </div>
+                                        
+                                        <br>
+                                        <div class="content contentFilesList" >
+                                            <!-- <div class="card">
+                                                <div class="card-body">
+                                                    <h6 class="card-subtitle mb-2 text-muted">Listas de carpetas permitidas</h6>
+                                                    <div id="formCarpetas">
+
+                                                        
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div> -->
+                                            <div class="card">
+                                                <div class="card-body">
+                                                    <h5 class="card-subtitle mb-2 text-muted">Permisos en Carpetas    <span class="badge badge-pill badge-primary btn float-right" id="checkAllEdit">Activar todo</span> </h5>
+                                                    <div id="filesListEdit">
+
+                                                        
+                                                    
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
                         </div>
 
                         <div class="modal-footer">
@@ -652,37 +692,7 @@ table.table.table-striped {
                                             </div>
                                         
                                         </div>
-                                        <!-- <div class="row">
-                                            <div class="col-lg-5">
-                                                <label class="col-lg-4 ">Carpetas</label>
-                                                <div class="col-lg-12">
-                                                    <select class="form-control" id="filesNuevo">
-                                                        <option value="">Selecciona una opción</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-6">
-                                                <label class="col-lg-4 permisosBlock">Permisos</label>
-                                                <div class="form-check form-check-inline">
-                                                    <input name="permisosCarpetas[]" class="permisosCarpetas form-check-input" type="checkbox" id="inlineCheckbox1" disabled value="1">
-                                                    <label class="permisosCarpetas form-check-label" for="inlineCheckbox1">Descarga</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input name="permisosCarpetas[]" class="permisosCarpetas form-check-input" type="checkbox" id="inlineCheckbox2" disabled value="2">
-                                                    <label class="permisosCarpetas form-check-label" for="inlineCheckbox2">Carga</label>
-                                                </div>
-                                                <div class="form-check form-check-inline">
-                                                    <input name="permisosCarpetas[]" class="permisosCarpetas form-check-input" type="checkbox" id="inlineCheckbox3" disabled value="3">
-                                                    <label class="permisosCarpetas form-check-label" for="inlineCheckbox3">Borrar</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-lg-1">
-                                                <label class="col-lg-4 permisosBlock">&nbsp;</label>
-                                                <button type="button" class="btn btn-outline-success" id="addNewFiles" disabled>+</button>
-                                            </div>
-                                            
-
-                                        </div> -->
+                                        
                                         <br>
                                         <div class="content contentFilesList" >
                                             <!-- <div class="card">
@@ -829,6 +839,8 @@ table.table.table-striped {
             // },500)
             
             })
+           
+            
 
             $("#tabla_usuarios_content").delegate(".acionesCambio","click",function(e){
                 e.preventDefault();
@@ -902,6 +914,9 @@ table.table.table-striped {
             }
             
         })
+         //checkAllEdit
+         /// FALTA AGREGAR LA NUEVA FUNCION
+
         $(".checkAllPermission")
         $("#filesList").delegate(".checkAllPermission","click",function(){
             var id = $(this).attr("data-id");
@@ -960,6 +975,10 @@ table.table.table-striped {
                 });
                 filesList += '</tbody></table>';
                 $("#filesList").html(filesList)
+                $("#filesListEdit").html(filesList)
+                
+                
+                
 
 
                 var extensiones = ''
@@ -972,6 +991,7 @@ table.table.table-striped {
                 });
                 
                 $("#formExtensiones").html(extensiones);
+                $("#formExtensionesEdit").html(extensiones);
 
                 
 
@@ -1020,7 +1040,7 @@ table.table.table-striped {
                         });
                         //console.error(perfilValue)
                         if(perfilValue == '1'){
-                            table += '<td><button data-user="' + valor.Usuario + '" data-Nombre="' + valor.Nombre + '" data-Paterno="' + valor.Paterno + '" data-Materno="' + valor.Materno + '" data-Email="' + valor.Email + '" data-idUser="' + valor.idUsuario + '" data-idPerfil="' + valor.idPerfil + '" data-idOrganizacion="' + valor.idOrganizacion + '" data-idTipoUsuario="' + valor.idTipoUsuario + '" data-Status="' + valor.Status + '" class="btn btn-warning btnEditar" data-toggle="modal" data-target="#modal-editar">Editar</button></td>';
+                            table += '<td><button data-user="' + valor.Usuario + '" data-Nombre="' + valor.Nombre + '" data-Paterno="' + valor.Paterno + '" data-Materno="' + valor.Materno + '" data-Email="' + valor.Email + '" data-idUser="' + valor.idUsuario + '" data-idPerfil="' + valor.idPerfil + '" data-idOrganizacion="' + valor.idOrganizacion + '" data-idTipoUsuario="' + valor.idTipoUsuario + '" data-Status="' + valor.Status + '" class="btn btn-warning btnEditar">Editar</button></td>';
                         }else{
                             table += '<td> </td>';
                         }
@@ -1172,9 +1192,12 @@ table.table.table-striped {
             $(document).on('click', '.btnEditar', function() {
                 console.log("Yes", $(this).attr("data-idUser"));
                 $("#idUsuarioS").val($(this).attr("data-idUser"));
+
+                let iduser = $(this).attr('data-iduser');
+                
                 console.log($(this).attr("data-idPerfil"));
-                console.log($(this).attr("data-idOrganizacion"));
-                console.log($(this).attr("data-idTipoUsuario"));
+                // console.log($(this).attr("data-idOrganizacion"));
+                // console.log($(this).attr("data-idTipoUsuario"));
                 console.log($(this).attr("data-Status"));
                 $("#userEdit").val($(this).attr("data-Nombre"));
                 $("#paternoEdit").val($(this).attr("data-Paterno"));
@@ -1184,6 +1207,23 @@ table.table.table-striped {
                 $("#organizacionEdit").val($(this).attr("data-idOrganizacion"));
                 $("#TipoUsuarioEdit").val($(this).attr("data-idTipoUsuario"));
                 $("#usuario").val($(this).attr("data-user"));
+
+
+                $.post('./core/API/getUserPermission.php', {
+                    iduser
+                    }, function(data) {
+                        if (parseInt(data.response[0].Code) == 1) {
+                            alert(iduser + "Code => 1")
+                        } else {
+                            alert(iduser + "Code => 0")
+                        }
+                    }, "JSON");
+            
+                console.log("Ejemplo click "+iduser)
+                // alert(iduser + "Ejemplo")
+                // data-toggle="modal" data-target="#modal-editar"
+                $("#modal-editar").modal("show")
+
             });
 
             

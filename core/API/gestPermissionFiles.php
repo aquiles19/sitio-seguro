@@ -42,6 +42,11 @@ $data['PARAMETERS'] = [
         "Subir"=> 1,
         "Descargar"=> 1,
         "Eliminar"=> 1
+    ], [
+        "idCarpeta"=> 51,
+        "Subir"=> 1,
+        "Descargar"=> 1,
+        "Eliminar"=> 1
     ]] #$idUsuario
     #"Password"=>strval($_POST['pass'])
 ];

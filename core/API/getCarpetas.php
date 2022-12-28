@@ -8,7 +8,7 @@ $ip = $_SERVER['REMOTE_ADDR'];
 
 $dataSession = json_decode($_SESSION["login"]);
 $id = $dataSession->response[0]->Usuario[0]->idUsuario;
-$idPerfil= strval($_POST['idPerfil']); 
+$idPerfil= intval($_POST['idPerfil']); 
 
 $data['PARAMETERS'] = [
     "idPerfil"=>$idPerfil

@@ -6,7 +6,7 @@ session_start();
 if (isset($_SESSION["login"])) {
 
     $data = json_decode($_SESSION["login"]);
-    if (isset($data->response[0]->Usuario[0]->idUsuario) && ($data->response[0]->Usuario[0]->idPerfil == 1 || $data->response[0]->Usuario[0]->idUsuario == 10 || $data->response[0]->Usuario[0]->idUsuario == 13)) {
+    if (isset($data->response[0]->Usuario[0]->idUsuario) && $data->response[0]->Usuario[0]->idPerfil == 1 ) {
         $idUser = $data->response[0]->Usuario[0]->idUsuario;
         $nombre = $data->response[0]->Usuario[0]->Nombre;
         $idPerfil = $data->response[0]->Usuario[0]->idPerfil;
@@ -513,7 +513,7 @@ table.table.table-striped {
                                     <div class="form-group">
                                         <label class="col-sm-4 col-md-4 col-lg-4 col-xs-4 ">Nombre:</label>
                                         <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
-                                            <input class="form-control" maxlength="16" required name="userEdit" id="userEdit" type="text" value="" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]{3,16}" title="Sólo letras Mayúsculas y minúsculas. Ej. María" />
+                                            <input class="form-control" maxlength="16" required name="userEdit" id="userEdit" type="text" value="" pattern="[a-zA-Z ]{3,16}" title="Sólo letras Mayúsculas, minúsculas y espacios. Ej. Nueva carpeta" />
                                         </div>
                                     </div>
                                     <div class="form-group">
@@ -581,7 +581,7 @@ table.table.table-striped {
                                             <div class="col-lg-6">
                                                 <label class="col-sm-4 col-md-4 col-lg-4 col-xs-4 ">Nombre:</label>
                                                 <div class="col-sm-12 col-md-12 col-lg-12 col-xs-12">
-                                                    <input class="form-control" maxlength="16" required id="nombreNuevo" type="text" value="" pattern="[a-zA-ZñÑáéíóúÁÉÍÓÚüÜ ]{3,16}" title="Sólo letras Mayúsculas y minúsculas. Ej. María" / placeholder="Nombre">
+                                                    <input class="form-control" maxlength="16" required id="nombreNuevo" type="text" value="" pattern="[a-zA-Z ]{3,16}" title="Sólo letras Mayúsculas, minúsculas y espacios. Ej. Nueva carpeta" / placeholder="Nombre">
                                                 </div>
                                             </div>
                                         </div>
@@ -782,54 +782,22 @@ table.table.table-striped {
                 console.log(data);
              
 
-               /*
-                var table = '<table id="Subtabla" class="table table-hover"><thead><tr><th>Nombre</th><th>Paterno</th><th>Materno</th><th>Email</th><th>Usuario</th><th>Estatus</th><th>Perfil</th><th>Editar</th><th>Accion</th></tr></thead><tbody>';
+               
+                var table = '<table id="Subtabla" class="table table-hover"><thead><tr><th>Nombre</th><th>Estado</th><th>Accion</th></tr></thead><tbody>';
 
-                $.each(data.response[0].CatUsuarios[0].Usuarios, function(indice, valor) {
+                $.each(data.response, function(indice, valor) {
                     if(valor.Nombre != undefined){
                         table += '<tr>';
                         table += '<td>' + valor.Nombre + '</td>';
-                        table += '<td>' + valor.Paterno + '</td>';
-                        table += '<td>' + valor.Materno + '</td>';
-                        table += '<td>' + valor.Email + '</td>';
-                        table += '<td>' + valor.Usuario + '</td>';
-                        
-
-                        var UsersStatus = valor.Status;
-                        if (UsersStatus != 0) {
-                            $.each(data.response[0].CatUsuarios[0].StatusUsuario, function(index, valor) {
-                                if (valor.idStatus == UsersStatus) {
-                                    table += '<td>' + valor.Nombre + '</td>';
-                                }
-                            });
-                        } else {
-                            table += '<td>Disponible</td>';
-                        }
-
-                        var dPerfil = valor.idPerfil;
-                        $.each(data.response[0].CatUsuarios[0].Perfiles, function(index, valor) {
-                            if (valor.idPerfil == dPerfil) {
-                                table += '<td>' + valor.Nombre + '</td>';
-                            }
-                        });
-                        //console.error(perfilValue)
-                        if(perfilValue == '1'){
-                            table += '<td><button data-user="' + valor.Usuario + '" data-Nombre="' + valor.Nombre + '" data-Paterno="' + valor.Paterno + '" data-Materno="' + valor.Materno + '" data-Email="' + valor.Email + '" data-idUser="' + valor.idUsuario + '" data-idPerfil="' + valor.idPerfil + '" data-idOrganizacion="' + valor.idOrganizacion + '" data-idTipoUsuario="' + valor.idTipoUsuario + '" data-Status="' + valor.Status + '" class="btn btn-warning btnEditar" data-toggle="modal" data-target="#modal-editar">Editar</button></td>';
+                        if(valor.Estatus){
+                            table += '<td>Activo</td>';
+                            table += '<td><button type="button" data-id="'+valor.idCarpeta+'" class="btn btn-warning btnDesactivar">Desactivar</button></td>';
                         }else{
-                            table += '<td> </td>';
+                            table += '<td>Inactivo</td>';
+                            table += '<td><button type="button" data-id="'+valor.idCarpeta+'" class="btn btn-success btnActivar">Activar</button></td>';
                         }
                         
-                        table += '<td><ul class="nav nav-pills">\
-                                    <li class="nav-item dropdown">\
-                                        <a class="nav-link active dropdown-toggle" data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">Acciones</a>\
-                                        <div class="dropdown-menu">\
-                                        <a class="dropdown-item acionesCambio" data-id="1" data-usuario="'+valor.idUsuario+'" href="#">Baja</a>\
-                                        <a class="dropdown-item acionesCambio" data-id="2" data-usuario="'+valor.idUsuario+'" href="#">Activacion</a>\
-                                        <a class="dropdown-item acionesCambio" data-id="3" data-usuario="'+valor.idUsuario+'" href="#">Bloqueo</a>\
-                                        <a class="dropdown-item acionesCambio" data-id="4" data-usuario="'+valor.idUsuario+'" href="#">Reset</a>\
-                                        <a class="dropdown-item acionesCambio" data-id="5" data-usuario="'+valor.idUsuario+'" href="#">Desloguear</a>\
-                                    </li>\
-                                </ul></td>';
+                        
                         table += '</tr>';
                     }
 
@@ -840,21 +808,44 @@ table.table.table-striped {
                     "language": {
                         "url": "assets/js/Spanish.json"
                     },
-                    "pagingType": "full_numbers",
-                        "columnDefs": [
-                            
-                            {
-                                "targets": [ 3 ],
-                                "visible": false,
-                                "searchable": true
-                            }
-                        ]
+                    "pagingType": "full_numbers"
                 });
 
 
-                */
+                
             }, 'json');
         }
+
+
+
+        
+        $(document).on('click', '.btnActivar', function() {
+            var id = $(this).attr("data-id");
+            var idStatus = 1;
+
+            alert("Activar " + id)
+            $.post('core/API/gestCarpetas.php', {
+                    idCarpeta:id,
+                    Estatus:idStatus
+                },function(data){
+                console.log(data)
+                $.alert(data);
+                }, 'json') 
+        });
+
+        $(document).on('click', '.btnDesactivar', function() {
+            var id = $(this).attr("data-id");
+            var idStatus = 0;
+            alert("Desactivar " + id)
+            $.post('core/API/gestCarpetas.php', {
+                    idCarpeta:id,
+                    Estatus:idStatus
+                },function(data){
+                console.log(data)
+                $.alert(data);
+                }, 'json') 
+        });
+
 
         // NUEVOUSUARIO 
         //NUEVO USUARIO
@@ -862,43 +853,15 @@ table.table.table-striped {
         $("#FormNuevo").submit(function(event) {
                 event.preventDefault();
                 var Nombre = $("#nombreNuevo").val();
-                var Paterno = $("#paternoNuevo").val();
-                var Materno = $("#maternoNuevo").val();
-                var Email = $("#emailNuevo").val();
-                //var Password = $("#Password").val();
-            // Password = md5(Password);
-                var Usuario = $("#usuarioNuevo").val();
-                var idPerfil = $("#perfilNuevo").val();
+                
 
 
-                var etiquetas = [];
-                    $.each($("input[name='carpetaNameId\[\]']"), function(){
-                        etiquetas.push($(this).val());
-                        console.log($(this).val())
-                    });
-                var listFilesName=etiquetas.join(", ");
-                console.log(etiquetas)
+               
 
-                var permisos = [];
-                    $.each($("input[name='permisosCarpetasActivas\[\]']"), function(){
-                        permisos.push($(this).val());
-                        console.log($(this).val())
-                    });
-                var listIds=permisos.join(", ");
-                console.log(permisos)
-
-                $.post('core/API/newuser.php', {
-                    permisos,
-                    etiquetas,
-                    Nombre: Nombre,
-                    Paterno: Paterno,
-                    Materno: Materno,
-                    Email: Email,
-                    //Password: Password,
-                    Usuario: Usuario,
-                    idPerfil: idPerfil
+                $.post('core/API/gestCarpetas.php', {                  
+                    Nombre: Nombre                  
                 },function(data){
-                console.log(data)
+                    $.alert(data);
                 }, 'json') 
 
         
