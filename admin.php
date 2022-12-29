@@ -286,39 +286,7 @@ table.table.table-striped {
 
         <body id="bodyMain">
 
-        <!-- navbar-expand-lg -->
-        <!-- <nav class="navbar  navbar-toggleable-lg  bg-faded head text-white">
-            <section class="container">
-            
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                    <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <h5 class="nav-link  text-white" href="#">IMSS 2 <span class="sr-only">(current)</span></h5>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link  text-white" href="#">Link</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link  text-white dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Action</a>
-                        <a class="dropdown-item" href="#">Another action</a>
-                        <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="#">Something else here</a>
-                        </div>
-                    </li>
-                    
-                    </ul>
-                
-                </div>
-            </section>
-        </nav> -->
+    
             <nav class="navbar navbar-toggleable-md navbar-light bg-faded head text-white fixed-top">
                 <section class="container">
                     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -368,24 +336,7 @@ table.table.table-striped {
 
                     <div id="secctionBienvenida">
                         <div id="divBienvenido" ><strong>
-                                <!-- <font color="#000066" size="3" face="Verdana, Arial, Helvetica, sans-serif">
-
-                                            <div align="center" id="divBienvenidoTexto">
-                                                <h1>
-                                                    <font color="#000066" size="6" face="Verdana, Arial, Helvetica, sans-serif"><strong>BIENVENIDO</strong></font>
-                                                </h1>
-                                                <font color="#000066" size="3" face="Verdana, Arial, Helvetica, sans-serif">
-                                                    <p>ADMINISTRADOR</p>
-
-                                                    <p>Ha iniciado Exitosamente una sesion dentro del Sistema</p>
-                                                    <p>Por razones de seguridad le suplicamos cerrar el navegador de internet en cuanto haya terminado.</p>
-                                                </font>
-                                            </div>
-
-
-
-
-                                        </font> -->
+                                
                                 <section class="body-cita">
                                     <div class="bg-inverse cita">
                                         <div class="container">
@@ -557,7 +508,7 @@ table.table.table-striped {
                                         
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <h6 class="card-subtitle mb-2 text-muted">Extensiones permitidas por usuario</h6>
+                                                    <h6 class="card-subtitle mb-2 text-muted">Extensiones permitidas por usuario <span class="badge badge-pill badge-primary btn float-right" id="checkAllExtEdit">Activar todo</span></h6>
                                                     <div id="formExtensionesEdit">
                                                     
                                                     </div>
@@ -680,7 +631,7 @@ table.table.table-striped {
                                         
                                             <div class="card">
                                                 <div class="card-body">
-                                                    <h6 class="card-subtitle mb-2 text-muted">Extensiones permitidas por usuario</h6>
+                                                    <h6 class="card-subtitle mb-2 text-muted">Extensiones permitidas por usuario     <span class="badge badge-pill badge-primary btn float-right" id="checkAllExt">Activar todo</span> </h6>
                                                     <div id="formExtensiones">
                                                     
                                                     </div>
@@ -899,6 +850,19 @@ table.table.table-striped {
             })
         });
 
+        
+        $("#checkAllExt").click(function(){
+            
+            if($(".extensionesFormulario").prop("checked")){
+                $(".extensionesFormulario").prop("checked",false)
+                $("#checkAllExt").html("Activar todo")
+            }else{
+                $("#checkAllExt").html("Desactivar todo")
+                $(".extensionesFormulario").prop("checked",true)
+            }
+            
+        })
+
         $("#checkAll").click(function(){
             
             if($(".checkAllPermission").prop("checked")){
@@ -910,6 +874,30 @@ table.table.table-striped {
             }
             
         })
+        $("#checkAllExtEdit").click(function(){
+            
+            if($(".extensionesFormularioEdit").prop("checked")){
+                $(".extensionesFormularioEdit").prop("checked",false)
+                $("#checkAllExtEdit").html("Activar todo")
+            }else{
+                $("#checkAllExtEdit").html("Desactivar todo")
+                $(".extensionesFormularioEdit").prop("checked",true)
+            }
+            
+        })
+
+        $("#checkAllEdit").click(function(){
+            
+            if($(".checkAllPermissionEdit").prop("checked")){
+                $(".checkAllPermissionEdit").prop("checked",false)
+                $("#checkAllEdit").html("Activar todo")
+            }else{
+                $("#checkAllEdit").html("Desactivar todo")
+                $(".checkAllPermissionEdit").prop("checked",true)
+            }
+            
+        })
+
          //checkAllEdit
          /// FALTA AGREGAR LA NUEVA FUNCION
 
@@ -971,6 +959,25 @@ table.table.table-striped {
                 });
                 filesList += '</tbody></table>';
                 $("#filesList").html(filesList)
+                var filesList='<table class="table table-striped">\
+                                <thead>\
+                                    <tr>\
+                                    <th scope="col">Carpeta</th>\
+                                    <th scope="col">Cargar</th>\
+                                    <th scope="col">Descarga</th>\
+                                    <th scope="col">Borrar</th>\
+                                    </tr>\
+                                </thead>\
+                            <tbody>';
+                $.each(data.response[0].CatUsuarios[0].Carpetas, function(indice, valor) {
+                    filesList += '<tr>';
+                    filesList += '<td><span class="File'+valor.idCarpeta+'" data-active="0" data-idFiles="'+valor.idCarpeta+'">' + valor.Nombre + '</span></td>';
+                    filesList += '<td><div class="form-check"><input class="checkAllPermissionEdit form-check-input" type="checkbox" value="" data-type="ce" data-id="'+valor.idCarpeta+'" id="ce'+valor.idCarpeta+'"><label class="form-check-label" for="ce'+valor.idCarpeta+'">Carga</label></div></td>';
+                    filesList += '<td><div class="form-check"><input class="checkAllPermissionEdit form-check-input" type="checkbox" value="" data-type="de" data-id="'+valor.idCarpeta+'" id="de'+valor.idCarpeta+'"><label class="form-check-label" for="de'+valor.idCarpeta+'">Descarga</label></div></td>';
+                    filesList += '<td><div class="form-check"><input class="checkAllPermissionEdit form-check-input" type="checkbox" value="" data-type="be" data-id="'+valor.idCarpeta+'" id="be'+valor.idCarpeta+'"><label class="form-check-label" for="be'+valor.idCarpeta+'">Borrar</label></div></td>';
+                    filesList += '</tr>';
+                });
+                filesList += '</tbody></table>';
                 $("#filesListEdit").html(filesList)
                 
                 
@@ -987,6 +994,14 @@ table.table.table-striped {
                 });
                 
                 $("#formExtensiones").html(extensiones);
+                var extensiones = ''
+
+                $.each(data.response[0].CatUsuarios[0].Extensiones, function(indice, valor) {
+                    extensiones += '<div class="form-check form-check-inline">\
+                                    <input class="extensionesFormularioEdit" form-check-input" type="checkbox" id="extensionEdit' + valor.idExtArc + '" value="' + valor.idExtArc + '">\
+                                    <label class="extensionesFormularioEdit" form-check-label" for="extensionEdit' + valor.idExtArc + '">' + valor.Nombre + '</label>\
+                                </div>';
+                });
                 $("#formExtensionesEdit").html(extensiones);
 
                 
@@ -1098,24 +1113,45 @@ table.table.table-striped {
                 var listFilesName=etiquetas.join(", ");
                 console.log(etiquetas)
 
-                var permisos = [];
-                    $.each($("input[name='permisosCarpetasActivas\[\]']"), function(){
-                        permisos.push($(this).val());
-                        console.log($(this).val())
-                    });
-                var listIds=permisos.join(", ");
-                console.log(permisos)
+                var carpetasPermitidas = [];
+                $.each($(".checkAllPermission:checked"),function(indice,valor){
+                    var limpiarTexto = valor.id;
+                    var id = parseInt(limpiarTexto.replace(/^[a-zA-Z]/, ''));
+                    carpetasPermitidas.push(parseInt(id))
+                })
+                const dataArr = new Set(carpetasPermitidas);
+                let result = [...dataArr];
+                console.log(result);
+                var carpetas = [];
+                $.each(result,function(indice,valor){
+                    var Subir=0,Descargar=0,Eliminar=0;
+                    if($("#c"+parseInt(valor)).prop("checked")){
+                        Subir=1;
+                    }
 
-                $.post('core/API/newuser.php', {
-                    permisos,
-                    etiquetas,
+                    if($("#d"+parseInt(valor)).prop("checked")){
+                        Descargar=1;
+                    }
+                    if($("#b"+parseInt(valor)).prop("checked")){
+                        Eliminar=1;
+                    }
+                    carpetas.push({"idCarpeta":valor,"Subir":Subir,"Descargar":Descargar,"Eliminar":Eliminar});
+                })
+                var extensionesFormulario = [];
+                $.each($(".extensionesFormulario:checked"),function(indice,valor){
+                    extensionesFormulario.push(parseInt(valor.value))
+                })
+              
+                $.post('core/API/test.php', {
                     Nombre: Nombre,
                     Paterno: Paterno,
                     Materno: Materno,
                     Email: Email,
                     //Password: Password,
                     Usuario: Usuario,
-                    idPerfil: idPerfil
+                    idPerfil: idPerfil,
+                    Carpetas:carpetas,
+                    Extensiones:extensionesFormulario
                 },function(data){
                 console.log(data)
                 }, 'json') 
@@ -1161,16 +1197,47 @@ table.table.table-striped {
                 var Email = $("#emailEdit").val();
                 var Usuario = $("#usuario").val();
                 var idPerfil = $("#perfilEdit").val();
-                var Accion = $("#AccionesEdit").val();
-                $.post('core/editusr.php', {
+                //var Accion = $("#AccionesEdit").val();
+                var carpetasPermitidas = [];
+                $.each($(".checkAllPermissionEdit:checked"),function(indice,valor){
+                    var limpiarTexto = valor.id;
+                    var id = parseInt(limpiarTexto.replace(/^[a-zA-Z]/, ''));
+                    carpetasPermitidas.push(parseInt(id))
+                })
+                const dataArr = new Set(carpetasPermitidas);
+                let result = [...dataArr];
+                console.log(result);
+                var carpetas = [];
+                $.each(result,function(indice,valor){
+                    var Subir=0,Descargar=0,Eliminar=0;
+                    if($("#c"+parseInt(valor)).prop("checked")){
+                        Subir=1;
+                    }
+
+                    if($("#d"+parseInt(valor)).prop("checked")){
+                        Descargar=1;
+                    }
+                    if($("#b"+parseInt(valor)).prop("checked")){
+                        Eliminar=1;
+                    }
+                    carpetas.push({"idCarpeta":valor,"Subir":Subir,"Descargar":Descargar,"Eliminar":Eliminar});
+                })
+
+                
+                var extensionesFormularioEdit = [];
+                $.each($(".extensionesFormularioEdit:checked"),function(indice,valor){
+                    extensionesFormularioEdit.push(parseInt(valor.value))
+                })
+
+                $.post('core/API/test.php', {
                 idUsuario: idUsuario,
                 Nombre: Nombre,
                 Paterno: Paterno,
                 Materno: Materno,
                 Email: Email,
-                Usuario: Usuario,
                 idPerfil: idPerfil,
-                Accion: Accion
+                Carpetas: carpetas,
+                Extensiones:extensionesFormularioEdit
                 }, function(data) {
                 console.log(data);
                 if (data.response[0].Code == 1) {
@@ -1204,14 +1271,44 @@ table.table.table-striped {
                 $("#TipoUsuarioEdit").val($(this).attr("data-idTipoUsuario"));
                 $("#usuario").val($(this).attr("data-user"));
 
-
+                $(".checkAllPermissionEdit").prop("checked",false)
+                $(".extensionesFormularioEdit").prop("checked",false)
+                
                 $.post('./core/API/getUserPermission.php', {
                     iduser
                     }, function(data) {
                         if (parseInt(data.response[0].Code) == 1) {
-                            alert(iduser + "Code => 1")
+                            //alert(iduser + "Code => 1")
+                            var extensiones = data.response[0].Extensiones
+                            extensiones = extensiones.split(",")
+
+                            $.each(extensiones,function(indice,valor){
+                                $("#extensionEdit"+parseInt(valor)).prop("checked",true);
+                            })
+                            console.log(iduser + "Code => 1")
+                            $.each(data.response[0].Carpetas, function(indice, valor) {
+                                if(valor.Subir){
+                                    $("#c"+valor.idCarpeta).prop("checked",true);
+                                }else{
+                                    $("#c"+valor.idCarpeta).prop("checked",false);
+                                }
+
+                                if(valor.Descargar){
+                                    $("#d"+valor.idCarpeta).prop("checked",true);
+                                }else{
+                                    $("#d"+valor.idCarpeta).prop("checked",false);
+                                }
+
+                                if(valor.Eliminar){
+                                    $("#b"+valor.idCarpeta).prop("checked",true);
+                                }else{
+                                    $("#b"+valor.idCarpeta).prop("checked",false);
+                                }
+                               
+                            });
                         } else {
-                            alert(iduser + "Code => 0")
+                            //alert(iduser + "Code => 0")
+                            console.log(iduser + "Code => 0")
                         }
                     }, "JSON");
             
@@ -1221,6 +1318,40 @@ table.table.table-striped {
                 $("#modal-editar").modal("show")
 
             });
+var guardarCarpetas = function(){
+            var carpetasPermitidas = [];
+            $.each($(".checkAllPermission:checked"),function(indice,valor){
+                var limpiarTexto = valor.id;
+                var id = parseInt(limpiarTexto.replace(/^[a-zA-Z]/, ''));
+                carpetasPermitidas.push(parseInt(id))
+            })
+            const dataArr = new Set(carpetasPermitidas);
+            let result = [...dataArr];
+            console.log(result);
+            var $carpetas = [];
+            $.each(result,function(indice,valor){
+                var Subir=0,Descargar=0,Eliminar=0;
+                if($("#c"+parseInt(valor)).prop("checked")){
+                    Subir=1;
+                }
+
+                if($("#d"+parseInt(valor)).prop("checked")){
+                    Descargar=1;
+                }
+                if($("#b"+parseInt(valor)).prop("checked")){
+                    Eliminar=1;
+                }
+                $carpetas.push({"idCarpeta":valor,"Subir":Subir,"Descargar":Descargar,"Eliminar":Eliminar});
+            })
+            console.log($carpetas);
+        return carpetas;
+               /*
+                "idCarpeta"=> 21,
+                "Subir"=> 1,
+                "Descargar"=> 1,
+                "Eliminar"=> 1 
+                */
+        }
 
             
         </script>

@@ -7,6 +7,44 @@ $consumo    =   new Servicio();
 $ip = $_SERVER['REMOTE_ADDR'];
 
 
+$RESPONSE = [];
+$data['PARAMETERS'] = [
+    "Nombre"=>$_POST["Nombre"],
+    "Paterno"=>$_POST["Paterno"],
+    "Materno"=>$_POST["Materno"],
+    "Email"=>$_POST["Email"],
+    "idPerfil"=>$_POST["idPerfil"]
+];
+
+// $response  -> idUsuario
+$response =  $consumo->API('SSI/GestUsuario',$data);
+$RESULT= json_decode($response, true);
+if($RESULT["response"][0]['Code']==1){
+    $idUsuario = $RESULT["response"][0]['idUsuario'];
+    $GestExt['PARAMETERS'] = [
+        "idUsuario"=>$idUsuario,
+        "ExtArchivos"=>$_POST["Extensiones"]
+    ];
+    $responseExtensiones =  $consumo->API('SSI/GestExtArchivos',$GestExt);
+    $RESULT["response"][0]['Extensiones']=$responseExtensiones;
+
+    $GestPerm['PARAMETERS'] = [
+        "idUsuario"=>$idUsuario,
+        "Carpetas"=>$_POST["Carpetas"]
+    ];
+    $responseCarpetas =  $consumo->API('SSI/GestPermisosCarpetas',$GestPerm);
+    $RESULT["response"][0]['Carpetas']=$responseCarpetas;
+    //GestExtArchivos
+}
+
+$response= json_encode($RESULT, JSON_UNESCAPED_UNICODE);
+echo $response;
+
+
+
+die();
+
+
 
 //////******************************** */ 
 //////
