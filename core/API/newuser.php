@@ -13,6 +13,7 @@ $data['PARAMETERS'] = [
     "Paterno"=>$_POST["Paterno"],
     "Materno"=>$_POST["Materno"],
     "Email"=>$_POST["Email"],
+    "Usuario"=> $_POST["Usuario"],
     "idPerfil"=>$_POST["idPerfil"]
 ];
 
@@ -23,7 +24,7 @@ if($RESULT["response"][0]['Code']==1){
     $idUsuario = $RESULT["response"][0]['idUsuario'];
     $GestExt['PARAMETERS'] = [
         "idUsuario"=>$idUsuario,
-        "ExtArchivos"=>$_POST["Extensiones"]
+        "ExtArchivos"=>implode(",", $_POST["Extensiones"])
     ];
     $responseExtensiones =  $consumo->API('SSI/GestExtArchivos',$GestExt);
     $RESULT["response"][0]['Extensiones']=$responseExtensiones;

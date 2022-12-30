@@ -366,33 +366,16 @@ table.table.table-striped {
 
                     <div id="secctionBienvenida">
                         <div id="divBienvenido" ><strong>
-                                <!-- <font color="#000066" size="3" face="Verdana, Arial, Helvetica, sans-serif">
-
-                                            <div align="center" id="divBienvenidoTexto">
-                                                <h1>
-                                                    <font color="#000066" size="6" face="Verdana, Arial, Helvetica, sans-serif"><strong>BIENVENIDO</strong></font>
-                                                </h1>
-                                                <font color="#000066" size="3" face="Verdana, Arial, Helvetica, sans-serif">
-                                                    <p>ADMINISTRADOR</p>
-
-                                                    <p>Ha iniciado Exitosamente una sesion dentro del Sistema</p>
-                                                    <p>Por razones de seguridad le suplicamos cerrar el navegador de internet en cuanto haya terminado.</p>
-                                                </font>
-                                            </div>
-
-
-
-
-                                        </font> -->
+                               
                                 <section class="body-cita">
                                     <div class="bg-inverse cita">
                                         <div class="container">
-                                            <h1 class="display-4 py-2 text-white">Administrador / Usuarios</h1>
+                                            <h1 class="display-4 py-2 text-white">Administrador / Carpetas</h1>
                                         </div>
                                     </div>
                                     <div class="bg-white py-3 px-4 container">
                                         <div class="titulos">
-                                            <p class="display-5"><strong>Usuarios</strong></p>
+                                            <p class="display-5"><strong>Carpetas</strong></p>
                                             <?php 
                                             if( $idPerfil == 1){ 
                                             ?>

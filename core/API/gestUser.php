@@ -20,7 +20,7 @@ $response =  $consumo->API('SSI/GestUsuario',$data);
 
 $GestExt['PARAMETERS'] = [
     "idUsuario"=>$_POST["idUsuario"],
-    "ExtArchivos"=>$_POST["Extensiones"]
+    "ExtArchivos"=>implode(",", $_POST["Extensiones"])
 ];
 $responseExtensiones =  $consumo->API('SSI/GestExtArchivos',$GestExt);
 
@@ -33,7 +33,7 @@ $responseCarpetas =  $consumo->API('SSI/GestPermisosCarpetas',$GestPerm);
 
 $RESPONSE = json_decode($response, true);
 $RESPONSE["response"][0]['Extensiones']=json_decode($responseExtensiones,true);
-$RESPONSE["response"][0]['Carpetas']=$responseCarpetas;
+$RESPONSE["response"][0]['Carpetas']=json_decode($responseCarpetas,true);
 
 $response= json_encode($RESPONSE, JSON_UNESCAPED_UNICODE);
 echo $response;

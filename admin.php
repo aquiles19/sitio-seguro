@@ -1142,18 +1142,27 @@ table.table.table-striped {
                     extensionesFormulario.push(parseInt(valor.value))
                 })
               
-                $.post('core/API/test.php', {
+                $.post('core/API/newuser.php', {
                     Nombre: Nombre,
                     Paterno: Paterno,
                     Materno: Materno,
                     Email: Email,
-                    //Password: Password,
                     Usuario: Usuario,
                     idPerfil: idPerfil,
                     Carpetas:carpetas,
                     Extensiones:extensionesFormulario
                 },function(data){
-                console.log(data)
+                    console.log(data)
+                    if (data.response[0].Code == 1) {
+                        //toastr.success('Usuarios', data.response[0].Msj);
+                        $.alert('Usuario' +data.response[0].Msj);
+                    }else{
+                        //toastr.warning('Usuarios', data.response[0].Msj);
+                        $.alert(data.response[0].Msj);
+                    }
+                    
+                    _getusuarios();
+                    $("#modal-nuevo").modal("hide");
                 }, 'json') 
 
         /*
@@ -1201,8 +1210,8 @@ table.table.table-striped {
                 var carpetasPermitidas = [];
                 $.each($(".checkAllPermissionEdit:checked"),function(indice,valor){
                     var limpiarTexto = valor.id;
-                    var id = parseInt(limpiarTexto.replace(/^[a-zA-Z]/, ''));
-                    carpetasPermitidas.push(parseInt(id))
+                    var id = parseInt(limpiarTexto.replace(/^[a-zA-Z]*/, ''));
+                    carpetasPermitidas.push(id)
                 })
                 const dataArr = new Set(carpetasPermitidas);
                 let result = [...dataArr];
@@ -1210,14 +1219,14 @@ table.table.table-striped {
                 var carpetas = [];
                 $.each(result,function(indice,valor){
                     var Subir=0,Descargar=0,Eliminar=0;
-                    if($("#c"+parseInt(valor)).prop("checked")){
+                    if($("#ce"+parseInt(valor)).prop("checked")){
                         Subir=1;
                     }
 
-                    if($("#d"+parseInt(valor)).prop("checked")){
+                    if($("#de"+parseInt(valor)).prop("checked")){
                         Descargar=1;
                     }
-                    if($("#b"+parseInt(valor)).prop("checked")){
+                    if($("#be"+parseInt(valor)).prop("checked")){
                         Eliminar=1;
                     }
                     carpetas.push({"idCarpeta":valor,"Subir":Subir,"Descargar":Descargar,"Eliminar":Eliminar});
@@ -1229,7 +1238,7 @@ table.table.table-striped {
                     extensionesFormularioEdit.push(parseInt(valor.value))
                 })
 
-                $.post('core/API/test.php', {
+                $.post('core/API/gestUser.php', {
                 idUsuario: idUsuario,
                 Nombre: Nombre,
                 Paterno: Paterno,
@@ -1240,15 +1249,29 @@ table.table.table-striped {
                 Extensiones:extensionesFormularioEdit
                 }, function(data) {
                 console.log(data);
-                if (data.response[0].Code == 1) {
-                    toastr.success('Usuarios', data.response[0].Msj);
-                    $(".Cerrar").click();
-                } else {
-                    toastr.warning('Usuarios', data.response[0].Msj);
+
+                //$.alert('Usuario' +data.response[0].Msj);
+                var usuario = "", carpetas = "", extensiones = "";
+                if (data.response[0].Code == 1) 
+                {
+                    usuario = "Se guardo el cambio de usuario correctamente <br>"; 
+                  //  toastr.success('Usuarios', data.response[0].Msj);
+                  //  $(".Cerrar").click();
                 }
+                
+                if(data.response[0].Carpetas.response[0].Code == 1){
+                    carpetas = "Se guardaron los cambios en carpetas correctamente<br>";
+                }
+
+                if(data.response[0].Extensiones.response[0].Code == 1){
+                    extensiones = "Se guardaron los cambios en extenciones correctamente <br>";
+                }
+                
+                $.alert(usuario + " " + carpetas +"" + extensiones);
                 let user = localStorage.getItem("usuario")
                 let perfil = localStorage.getItem("perfil")
                 _getusuarios(user,perfil);
+                $("#modal-editar").modal("hide")
                 // _getusuarios();
                 }, 'json');
             });
@@ -1279,30 +1302,33 @@ table.table.table-striped {
                     }, function(data) {
                         if (parseInt(data.response[0].Code) == 1) {
                             //alert(iduser + "Code => 1")
-                            var extensiones = data.response[0].Extensiones
-                            extensiones = extensiones.split(",")
+                            if(data.response[0].Extensiones != null){
+                                var extensiones = data.response[0].Extensiones
+                                extensiones = extensiones.split(",")
 
-                            $.each(extensiones,function(indice,valor){
-                                $("#extensionEdit"+parseInt(valor)).prop("checked",true);
-                            })
+                                $.each(extensiones,function(indice,valor){
+                                    $("#extensionEdit"+parseInt(valor)).prop("checked",true);
+                                })
+                            }
+
                             console.log(iduser + "Code => 1")
                             $.each(data.response[0].Carpetas, function(indice, valor) {
                                 if(valor.Subir){
-                                    $("#c"+valor.idCarpeta).prop("checked",true);
+                                    $("#ce"+valor.idCarpeta).prop("checked",true);
                                 }else{
-                                    $("#c"+valor.idCarpeta).prop("checked",false);
+                                    $("#ce"+valor.idCarpeta).prop("checked",false);
                                 }
 
                                 if(valor.Descargar){
-                                    $("#d"+valor.idCarpeta).prop("checked",true);
+                                    $("#de"+valor.idCarpeta).prop("checked",true);
                                 }else{
-                                    $("#d"+valor.idCarpeta).prop("checked",false);
+                                    $("#de"+valor.idCarpeta).prop("checked",false);
                                 }
 
                                 if(valor.Eliminar){
-                                    $("#b"+valor.idCarpeta).prop("checked",true);
+                                    $("#be"+valor.idCarpeta).prop("checked",true);
                                 }else{
-                                    $("#b"+valor.idCarpeta).prop("checked",false);
+                                    $("#be"+valor.idCarpeta).prop("checked",false);
                                 }
                                
                             });

@@ -4,6 +4,7 @@
 
 $RESPONSE = [];
 $data['PARAMETERS'] = [
+    "idUsuario"=>$_POST["idUsuario"],
     "Nombre"=>$_POST["Nombre"],
     "Paterno"=>$_POST["Paterno"],
     "Materno"=>$_POST["Materno"],
@@ -12,7 +13,7 @@ $data['PARAMETERS'] = [
 ];
 
 // $response  -> idUsuario
-$idUsuario = 0;
+$idUsuario = $_POST["idUsuario"];
 $GestExt['PARAMETERS'] = [
     "idUsuario"=>$idUsuario,
     "ExtArchivos"=>$_POST["Extensiones"]
